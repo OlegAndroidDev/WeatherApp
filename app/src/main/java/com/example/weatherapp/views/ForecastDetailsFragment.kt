@@ -28,21 +28,22 @@ class ForecastDetailsFragment : BaseFragment() {
     ): View? {
 
         val chosenForecast = sharedViewModel.getChosenForecast()
-        val cityName =  sharedViewModel.getCityName()
+        val cityName =  sharedViewModel.cityName.value
 
         binding.nameCity.text = cityName
-        binding.dateTime.text = "Date and time: " + chosenForecast?.dtTxt
+        binding.dateTime.text = String.format("Date and time: " + chosenForecast?.dtTxt)
 
-        val feelsLike = chosenForecast?.main?.feelsLike
-            ?.let { roundToFloor(kelvinToCelsius(it)) }
-        binding.feelsLike.text = "Feels like: $feelsLike\u2103"
+        chosenForecast?.let {
+            val feelsLike = it.main.feelsLike.kelvinToCelsius().roundToFloor()
+            binding.feelsLike.text = String.format("Feels like: $feelsLike\u2103")
 
-        val temp = chosenForecast?.main?.temp
-            ?.let { roundToFloor(kelvinToCelsius(it)) }
-        binding.temp.text = "Temperature: $temp\u2103"
+            val temp = it.main.temp.kelvinToCelsius().roundToFloor()
+            binding.temp.text = String.format("Temperature: $temp\u2103")
 
-        binding.description.text = "Description: " + chosenForecast?.weather?.get(0)?.description
-        binding.humidity.text = "Humidity: " + chosenForecast?.main?.humidity.toString()
+            binding.description.text = String.format("Description: " + it.weather[0].description)
+            binding.humidity.text = String.format("Humidity: " + it.main.humidity.toString())
+        }
+
         // Inflate the layout for this fragment
         return binding.root
 
@@ -51,14 +52,8 @@ class ForecastDetailsFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
-        binding.backButton.setOnClickListener(View.OnClickListener {
+        binding.backButton.setOnClickListener {
             findNavController().navigate(R.id.action_DetailsFragment_to_ForecastFragment)
-        })
-    }
-
-
-
-    companion object {
-        fun newInstance() = ForecastDetailsFragment()
+        }
     }
 }

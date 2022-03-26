@@ -42,11 +42,11 @@ class WeatherViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(forecast: Forecast) {
-        val feelsLike = kelvinToCelsius(forecast.main.feelsLike)
-        val finalFeelsLike = roundToFloor(feelsLike)
-        binding.temperature.text = "${roundToFloor(kelvinToCelsius(forecast.main.temp))}\u2103"
+        val feelsLike = forecast.main.feelsLike.kelvinToCelsius()
+        val finalFeelsLike = feelsLike.roundToFloor()
+        binding.temperature.text = String.format("${forecast.main.temp.kelvinToCelsius().roundToFloor()}\u2103")
         binding.dateTime.text = forecast.dtTxt
-        binding.feelsLike.text = "$finalFeelsLike\u2103"
+        binding.feelsLike.text = String.format("$finalFeelsLike\u2103")
 
         binding.forecastItem.setOnClickListener {
             onForecastClicked.invoke(forecast)

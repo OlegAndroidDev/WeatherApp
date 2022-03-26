@@ -56,9 +56,12 @@ class ForecastFragment : BaseFragment() {
         //    Log.d("forecast fragment observer", it)
         //})
 
-        val cityName = sharedViewModel.getCityName()
-        binding.cityForecast.text = "$cityName forecast"
-        sharedViewModel.getForecast(cityName)
+        val cityName = sharedViewModel.cityName.value
+        binding.cityForecast.text = String.format("$cityName forecast")
+
+        cityName?.let {
+            sharedViewModel.getForecast(it)
+        }
 
         return binding.root
     }
