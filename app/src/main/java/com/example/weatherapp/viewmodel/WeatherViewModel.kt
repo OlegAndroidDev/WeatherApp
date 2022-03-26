@@ -49,11 +49,7 @@ class WeatherViewModel(
     fun setCityName(city: String) {
 //        _cityName.postValue(city)
         _cityName.value = city
-        Log.d("view model fragment to string", _cityName.value.toString())
-    }
-
-    fun getCityName(): String {
-        return cityName.value ?: ""
+        Log.d("view model fragment to string", cityName.value.toString())
     }
 
     fun getForecast(city: String) {

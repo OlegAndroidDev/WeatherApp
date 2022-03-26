@@ -37,11 +37,11 @@ class SearchCityFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
-        binding.searchButton.setOnClickListener(View.OnClickListener {
+        binding.searchButton.setOnClickListener {
             val cityName = binding.enterCityName.text.toString()
             sharedViewModel.setCityName(cityName)
             findNavController().navigate(R.id.action_SearchFragment_to_ForecastFragment)
-        })
+        }
     }
 
     companion object {
